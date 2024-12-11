@@ -1,0 +1,6 @@
+output
+.env
+pdf_input
+__pycache__
+.ipynb_checkpoints
+logger.log

@@ -1,0 +1,520 @@
+{
+    "BEI":{
+        "context":"Review the SECAP document and find answers to the following questions regarding the Baseline Emission Inventory (BEI):",
+        "questions":[
+            {
+                "qid":"BEI_baseline_year",
+                "question":"What is the baseline reference year of the Baseline emission inventory?",
+                "response_format":"YYYY",
+                "additional_context":""
+            },
+            {
+                "qid":"BEI_territorial_coverage",
+                "question":"Does the SECAP covers the entire territory of the city or municipality?",
+                "response_format":"true/false",
+                "additional_context":""
+            },
+            {
+                "qid":"BEI_sectors_stationary_energy",
+                "question":"Does the SECAP covers the sector stationary energy? Mainly buildings, equipment, and facilities.",
+                "response_format":"true/false",
+                "additional_context":"These emissions come from final energy consumption in residential, commercial, and municipal/institutional buildings and facilities, as well as from manufacturing, construction industries (below or equal to 20 MW as thermal energy input), and agriculture/forestry/fisheries. GHG emissions from energy generation industries/facilities should not be reported under this sector to avoid double counting of emissions."
+            },
+            {
+                "qid":"BEI_sectors_transport",
+                "question":"Does the SECAP covers the transport sector?",
+                "response_format":"true/false",
+                "additional_context":"All GHG emissions (direct emission from fuel combustion and indirect emission due to consumption of grid-supplied energy) occurring for transportation purposes within the local authority boundary shall be reported"
+            },
+            {
+                "qid":"BEI_sectors_waste_wastewater",
+                "question":"Does the SECAP covers the waste and waste water sector?",
+                "response_format":"true/false",
+                "additional_context":""
+            },
+            {
+                "qid":"BEI_sectors_waste_IPPU",
+                "question":"Does the SECAP covers the Industrial processes and product use (IPPU) sector?",
+                "response_format":"true/false",
+                "additional_context":""
+            },
+            {
+                "qid":"BEI_sectors_waste_AFOLU",
+                "question":"Does the SECAP covers the Agriculture, Forestry, and Other Land Use (AFOLU) sector?",
+                "response_format":"true/false",
+                "additional_context":""
+            },
+            {
+                "qid":"BEI_gas_coverage",
+                "question":"List all gases that the SECAP provides inventories for. Check for all these gases: ",
+                "response_format":"[\"gas1\",\"gas2\"]",
+                "additional_context":"Gases: CO2 (Carbon dioxide), CH4 (Methan), N2O (Nitrous oxide), PFCs (Perfluorinated compounds), NF3 (Nitrogen trifluoride), HFCs (Hydrofluorocarbon), SF6 (Sulfur hexafluoride)"
+            },
+            {
+                "qid":"BEI_ETS_coverage",
+                "question":"Does the SECAP covers also sectors and facilities that are included in Emission Trade System (EU-ETS)?",
+                "response_format":"[\"ETS-sector-covered\",\"ETS-facility-covered\"]",
+                "additional_context":"If no sectors/facilities identified, return empty list **EU-ETS sectors**: - **Combustion of fuels** (e.g., coal, natural gas, oil) for electricity and heat generation - **Cement production** (including clinker production) - **Lime production** - **Glass production** (including flat glass and container glass) - **Ceramics production** (including tiles, bricks, and refractory products) - **Steel production** (including electric arc furnaces and blast furnaces) - **Aluminum production** (including smelting and refining) - **Aviation** (including commercial airlines, business aviation, and general aviation) - **Industrial processes** (including the production of ammonia, nitric acid, and adipic acid)"
+            }
+        ]
+    },
+    "ambitions": {
+        "context": "Review the SECAP document and find answers the following questions regarding the reduction targets set by the city.",
+        "questions": [
+            {
+                "qid": "reduction_target_percentage",
+                "question": "The percentage of emission reduction the city aims to achieve",
+                "response_format": "float",
+                "additional_context": ""
+            },
+            {
+                "qid": "reduction_target_baseline_year",
+                "question": "The baseline year for this target",
+                "response_format": "YYYY",
+                "additional_context": ""
+            },
+            {
+                "qid": "reduction_target_target_year",
+                "question": "The target year",
+                "response_format": "YYYY",
+                "additional_context": ""
+            },
+            {
+                "qid": "reduction_target_type",
+                "question": "The type of target (e.g., overall, sector-specific, with/without LULUCF, gas-specific)",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "reduction_target_unit",
+                "question": "Target unit (% of how are the emissions measured in this case? i.e. tonnes of CO2; tonnes of CO2 equivalent, etc.)",
+                "response_format": "string",
+                "additional_context": ""
+            }
+        ]
+    },
+    "sectoral_ambitions": {
+        "context": "Review the SECAP document and find answers the following questions regarding the sectoral targets. Does the SECAP report clearly identifies the sectoral targets? Are the sectors clearly defined? If yes, state the sectors.",
+        "questions": [
+            {
+                "qid": "sector_target_stationary_energy",
+                "question": "If the SECAP sets a sector-specific target for Stationary energy, what is the target?",
+                "response_format": "string",
+                "additional_context": "These emissions come from final energy consumption in residential, commercial, and municipal/institutional buildings and facilities, as well as from manufacturing, construction industries (below or equal to 20 MW as thermal energy input), and agriculture/forestry/fisheries. GHG emissions from \"energy generation\" industries/facilities should not be reported under this sector to avoid double counting of emissions."
+            },
+            {
+                "qid": "sector_target_transport",
+                "question": "If the SECAP sets a sector-specific target for Transport, what is the target?",
+                "response_format": "string",
+                "additional_context": "All GHG emissions (direct emission from fuel combustion and indirect emission due to consumption of grid-supplied energy) occurring for transportation purposes within the local authority boundary shall be reported"
+            },
+            {
+                "qid": "sector_target_waste_wastewater",
+                "question": "If the SECAP sets a sector-specific target for Waste/wastewater, what is the target?",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "sector_target_ippu",
+                "question": "If the SECAP sets a sector-specific target for Industrial processes and product use (IPPU), what is the target?",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "sector_target_afolu",
+                "question": "If the SECAP sets a sector-specific target for Agriculture, Forestry, and Other Land Use (AFOLU), what is the target?",
+                "response_format": "string",
+                "additional_context": ""
+            }
+        ]
+    },
+    "gas_ambitions": {
+        "context": "Review the SECAP document and find answers the following questions regarding the gases included in the reduction target.",
+        "questions": [
+            {
+                "qid": "gas_reduction_target_CO2",
+                "question": "If the SECAP sets a specific reduction target for CO2, what is the target?",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "gas_reduction_target_CH4",
+                "question": "If the SECAP sets a specific reduction target for CH4, what is the target?",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "gas_reduction_target_N2O",
+                "question": "If the SECAP sets a specific reduction target for N2O, what is the target?",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "gas_reduction_target_PFCs",
+                "question": "If the SECAP sets a specific reduction target for PFCs, what is the target?",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "gas_reduction_target_NF3",
+                "question": "If the SECAP sets a specific reduction target for NF3, what is the target?",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "gas_reduction_target_HFCs",
+                "question": "If the SECAP sets a specific reduction target for HFCs, what is the target?",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "gas_reduction_target_SF6",
+                "question": "If the SECAP sets a specific reduction target for SF6, what is the target?",
+                "response_format": "string",
+                "additional_context": ""
+            }
+        ]
+    },
+    "barriers": {
+        "context": "Review the SECAP document and find answers the following questions regarding the barriers potentially hindering achieving the mitigation target.",
+        "questions": [
+            {
+                "qid": "barrier_leadership",
+                "question": "Are some barries identified in the \"Leadership\" category? If yes, describe them",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "barrier_financial",
+                "question": "Are some barries identified in the \"Financial\" category? If yes, describe them",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "barrier_regulatory",
+                "question": "Are some barries identified in the \"Regulatory\" category? If yes, describe them",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "barrier_operational",
+                "question": "Are some barries identified in the \"Operational\" category? If yes, describe them",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "barrier_organisational",
+                "question": "Are some barries identified in the \"Organizational\" category? If yes, describe them",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "barrier_partnerships",
+                "question": "Are some barries identified in the \"Partnerships\" category? If yes, describe them",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "barrier_social",
+                "question": "Are some barries identified in the \"Social\" category? If yes, describe them",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "barrier_environmental",
+                "question": "Are some barries identified in the \"Environmental\" category? If yes, describe them",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "barrier_safety_security",
+                "question": "Are some barries identified in the \"Safety and security\" category? If yes, describe them",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "barrier_other",
+                "question": "Are some barries identified in the \"Other\" category? If yes, describe them",
+                "response_format": "string",
+                "additional_context": ""
+            }
+        ]
+    },
+    "citizens_general": {
+        "context": "Review the SECAP document and find answers the following questions regarding citizen participation at the plan level.",
+        "questions":[
+            {
+                "qid": "provisions_included",
+                "question": "Are citizen engagement provisions included in the plan?",
+                "response_format": "string",
+                "additional_context":""
+            },
+            {
+                "qid": "instruments_for_participation",
+                "question": "Does the plan suggest any instruments to enhance citizen participation in energy decision- and policy-making?",
+                "response_format": "string",
+                "additional_context":""
+            },
+            {
+                "qid": "energy_citizenship",
+                "question": "Does the plan mention energy citizenship? If yes, describe the concept.",
+                "response_format": "string",
+                "additional_context":""
+            }                
+        ]
+    },
+    "citizens_processes": {
+        "context": "The SECAP document contains individual participatory processes. Review the document to answer questions about these processes.",
+        "questions": [
+            {
+                "qid": "citizens_processes_1",
+                "question": "Is there a participatory process described in the SECAP plan? If yes, describe the process.",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "citizens_processes_2",
+                "question": "Has any part of the SECAP plan been developed through this participatory process?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "citizens_processes_3",
+                "question": "Does this participatory process mention citizens' contribution to specific priorities in the plan?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "citizens_processes_4",
+                "question": "Are vulnerable groups considered among the participants in this participatory process?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "citizens_processes_5",
+                "question": "Are important/relevant stakeholders involved in this participatory process?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "citizens_processes_6",
+                "question": "Is the role of each stakeholder clearly explained in this participatory process?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "citizens_processes_7",
+                "question": "Have any specific barriers to /challenges for citizen engagement been analysed and documented in this participatory process?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "citizens_processes_8",
+                "question": "Does this participatory process include solutions/opportunities to remove identified barriers or fill gaps?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "citizens_processes_9",
+                "question": "How does this participatory process support the implementation of the plan and the achievement of the climate target?",
+                "response_format": "string",
+                "additional_context": ""
+            },
+            {
+                "qid": "citizens_processes_10",
+                "question": "Are the contributions expected from citizens clearly defined in this participatory process?",
+                "response_format": "boolean",
+                "additional_context": ""
+            }
+        ]
+    },
+    "social_aspects": {
+        "context": "Review the SECAP document and find answers the following questions regarding social aspects of the climate transition.",
+        "questions": [
+            {
+                "qid": "status_quo_analysis",
+                "question": "Has the city analysed social aspects as part of the status quo analysis and CNC planning?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "social_issues_addressed",
+                "question": "Does the analysis include issues like limited access to affordable housing, healthcare, education, and job opportunities, social isolation, disconnected communities, poverty (actual, energy, transport)?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "social_impact_evaluation",
+                "question": "Does the plan include any assessment, monitoring and/or evaluation of the possible social impacts of the transition?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "monitoring_mechanisms",
+                "question": "Are there any monitoring mechanisms to in place or ex-post evaluation systems to assess the social impacts of the transition?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "energy_poverty_indicators",
+                "question": "Are energy actions contributing to alleviate energy poverty, as indicated by mentions or targets related to indicators such as arrears on utility bills, inability to keep home adequately warm, high share of energy expenditure in income, household electricity prices?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "energy_poverty_targets",
+                "question": "Are there specific targets or actions aimed at reducing energy poverty in the plan?",
+                "response_format": "boolean",
+                "additional_context": ""
+            }
+        ]
+    },
+    "governance": {
+        "context": "Review the SECAP document and find answers the following questions regarding governance structure and policy involvement.",
+        "questions": [
+            {
+                "qid": "current_governance_analysis",
+                "question": "Does the Action Plan analyse the current governance structure on climate policy?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "internal_organisation",
+                "question": "Does the Action Plan include information on the city's internal organisation, functioning, and capacity?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "governance_adequacy",
+                "question": "Has the adequacy of the current governance system to deliver on the plan been analysed?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "gaps_identified",
+                "question": "Does the analysis identify any gaps/barriers/bottlenecks in the governance system relevant to climate change impact mitigation?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "enabling_conditions",
+                "question": "Does the plan identify enabling conditions and barriers for a governance change?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "governance_change_costs",
+                "question": "Does the plan assess costs and access to resources for a governance change in terms of additional staff and introduction of new skills for the local administration?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "policy_involvement",
+                "question": "Does the plan assess the possibility of low policymakers engagement, lack of long-term commitment or weak cooperation with the regional and national level and actions on how to address it?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "stakeholder_participation",
+                "question": "Does the plan assess the potential lack of stakeholders/citizens participation in the governance system and how to make sure that they are included and their interests are taken into consideration in the future?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "departmental_cooperation",
+                "question": "Does the plan assess the potential lack of cooperation across departments/absence of integration of climate issues in other sectors and how to address this in the future?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "governance_change_solutions",
+                "question": "Does the action plan identify solutions on how to remove governance barriers and create a fit-for-purpose structure?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "capacity_building",
+                "question": "Does the Action Plan include capacity building of the local administration, including organisational capacity building?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "regulatory_framework_advancements",
+                "question": "Does the Action Plan foresee advancements in the creation of an enabling regulatory framework?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "coordination_mechanisms",
+                "question": "Does the governance system foreseen to achieve climate change impact mitigation include processes and mechanisms to ensure coordination within the local authority departments, or among the local authority and other public agencies?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "roles_and_responsibilities",
+                "question": "Are roles and responsibilities well defined?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "intergovernmental_coordination",
+                "question": "Does the governance system foreseen to achieve climate change impact mitigation include processes and mechanisms to ensure coordination among the local authority and higher levels of government?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "socio-economic_actor_involvement",
+                "question": "Does the governance system foreseen to achieve climate change impact mitigation include relevant local socio-economic actors in the policy cycle (design, implementation, monitoring and evaluation)?",
+                "response_format": "boolean",
+                "additional_context": ""
+            }
+        ]
+    },
+    "integrations": {
+        "context": "Review the SECAP document and find answers the following questions regarding integration analysis and stakeholder environment. 0. Does the SECAP report clearly identifies integration analysis and stakeholder environment? 1. Are the integration analysis and stakeholder environment clearly described? If yes, state the aspects.",
+        "questions": [
+            {
+                "qid": "policy_links_and_synergies",
+                "question": "Does the plan describe links and synergies with existing overarching policies, strategies and agendas?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "stakeholder_mapping",
+                "question": "Does the plan identify the key stakeholders that could be part of or affected by the planned actions?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "stakeholder_environment_evaluation",
+                "question": "Has the comprehensiveness and inclusiveness of the stakeholder environment been evaluated?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "stakeholder_inclusion",
+                "question": "Has the city reflected upon which stakeholders have been so far included in policy-making, action planning, and action implementation?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "stakeholder_types",
+                "question": "Does the stakeholder environment include national/regional/neighbouring local governments, academia and R&I institutions, private sector, financial institutions, trade unions, NGOs and associations, utilities, citizen and renewable energy communities, citizens (including vulnerable groups), youth and education sector?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "integrated_objectives",
+                "question": "Are the objectives of the plan designed to address the identified environmental challenges in an integrated manner (e.g. taking into account also economic, social, cultural etc. aspects)?",
+                "response_format": "boolean",
+                "additional_context": ""
+            },
+            {
+                "qid": "multidimensional_implications",
+                "question": "Do the objectives consider related multidimensional implications?",
+                "response_format": "boolean",
+                "additional_context": ""
+            }
+        ]
+    }
+}
