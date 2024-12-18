@@ -1,65 +1,65 @@
 {
     "BEI":{
-        "context":"Review the SECAP document and find answers to the following questions regarding the Baseline Emission Inventory (BEI):",
+        "context":"Review the SECAP document and analyze the Baseline Emission Inventory (BEI) with a focus on the following key aspect:\nIdentify which sectors mentioned in the plan have their emission inventories actually included in the calculation of the emission reduction target. In other words, it's not sufficient to simply mention a sector in the plan; we need to determine if its emissions are quantitatively accounted for in the BEI and, subsequently, used to set a specific reduction target.\nSpecifically, address the following questions:\n1. Which sectors are explicitly mentioned in the plan, but do not have their emission inventories included in the BEI or used to set a reduction target?\n2. Are there any sectors whose emission inventories are included in the BEI, but are not clearly linked to a specific reduction target or action plan?\n3. How transparent is the SECAP document in distinguishing between sectors that are merely mentioned and those that have their emission inventories actively used to inform the emission reduction target?\nBy focusing on this critical distinction, provide an assessment of the SECAP document's effectiveness in using baseline emission inventories to set meaningful emission reduction targets. If the city uses multiple BEI estimates, consider only the most up-to-date\n\n",
         "questions":[
             {
                 "qid":"BEI_baseline_year",
-                "question":"What is the baseline reference year of the Baseline emission inventory?",
+                "question":"What is the baseline reference year of the baseline emission inventory?",
                 "response_format":"YYYY",
                 "additional_context":""
             },
             {
                 "qid":"BEI_territorial_coverage",
-                "question":"Does the SECAP covers the entire territory of the city or municipality?",
+                "question":"Does the baseline emission inventory covers the entire territory of the city or municipality?",
                 "response_format":"true/false",
                 "additional_context":""
             },
             {
                 "qid":"BEI_sectors_stationary_energy",
-                "question":"Does the SECAP covers the sector stationary energy? Mainly buildings, equipment, and facilities.",
+                "question":"Does the baseline emission inventory covers the sector stationary energy? Mainly buildings, equipment, and facilities.",
                 "response_format":"true/false",
                 "additional_context":"These emissions come from final energy consumption in residential, commercial, and municipal/institutional buildings and facilities, as well as from manufacturing, construction industries (below or equal to 20 MW as thermal energy input), and agriculture/forestry/fisheries. GHG emissions from energy generation industries/facilities should not be reported under this sector to avoid double counting of emissions."
             },
             {
                 "qid":"BEI_sectors_transport",
-                "question":"Does the SECAP covers the transport sector?",
+                "question":"Does the baseline emission inventory covers the transport sector?",
                 "response_format":"true/false",
                 "additional_context":"All GHG emissions (direct emission from fuel combustion and indirect emission due to consumption of grid-supplied energy) occurring for transportation purposes within the local authority boundary shall be reported"
             },
             {
                 "qid":"BEI_sectors_waste_wastewater",
-                "question":"Does the SECAP covers the waste and waste water sector?",
+                "question":"Does the baseline emission inventory covers the waste and waste water sector?",
                 "response_format":"true/false",
                 "additional_context":""
             },
             {
                 "qid":"BEI_sectors_waste_IPPU",
-                "question":"Does the SECAP covers the Industrial processes and product use (IPPU) sector?",
+                "question":"Does the baseline emission inventory covers the Industrial processes and product use (IPPU) sector?",
                 "response_format":"true/false",
                 "additional_context":""
             },
             {
                 "qid":"BEI_sectors_waste_AFOLU",
-                "question":"Does the SECAP covers the Agriculture, Forestry, and Other Land Use (AFOLU) sector?",
+                "question":"Does the baseline emission inventory covers the Agriculture, Forestry, and Other Land Use (AFOLU) sector?",
                 "response_format":"true/false",
                 "additional_context":""
             },
             {
                 "qid":"BEI_gas_coverage",
-                "question":"List all gases that the SECAP provides inventories for. Check for all these gases: ",
+                "question":"List all gases included in baseline emission inventories of the report. Check for all these gases: ",
                 "response_format":"[\"gas1\",\"gas2\"]",
                 "additional_context":"Gases: CO2 (Carbon dioxide), CH4 (Methan), N2O (Nitrous oxide), PFCs (Perfluorinated compounds), NF3 (Nitrogen trifluoride), HFCs (Hydrofluorocarbon), SF6 (Sulfur hexafluoride)"
             },
             {
                 "qid":"BEI_ETS_coverage",
-                "question":"Does the SECAP covers also sectors and facilities that are included in Emission Trade System (EU-ETS)?",
+                "question":"Does the baseline emission inventories cover also sectors and facilities that are included in Emission Trade System (EU-ETS)?",
                 "response_format":"[\"ETS-sector-covered\",\"ETS-facility-covered\"]",
-                "additional_context":"If no sectors/facilities identified, return empty list **EU-ETS sectors**: - **Combustion of fuels** (e.g., coal, natural gas, oil) for electricity and heat generation - **Cement production** (including clinker production) - **Lime production** - **Glass production** (including flat glass and container glass) - **Ceramics production** (including tiles, bricks, and refractory products) - **Steel production** (including electric arc furnaces and blast furnaces) - **Aluminum production** (including smelting and refining) - **Aviation** (including commercial airlines, business aviation, and general aviation) - **Industrial processes** (including the production of ammonia, nitric acid, and adipic acid)"
+                "additional_context":"If no sectors/facilities identified, return empty list \n**EU-ETS sectors**: - **Combustion of fuels** (e.g., coal, natural gas, oil) for electricity and heat generation - **Cement production** (including clinker production) - **Lime production** - **Glass production** (including flat glass and container glass) - **Ceramics production** (including tiles, bricks, and refractory products) - **Steel production** (including electric arc furnaces and blast furnaces) - **Aluminum production** (including smelting and refining) - **Aviation** (including commercial airlines, business aviation, and general aviation) - **Industrial processes** (including the production of ammonia, nitric acid, and adipic acid)"
             }
         ]
     },
     "ambitions": {
-        "context": "Review the SECAP document and find answers the following questions regarding the reduction targets set by the city.",
+        "context": "Review the SECAP document and describe exact properties of reduction targets - target year, its units or sectoral coverage.\nDo not confuse between the city's legal commitments and its own reduction targets based in the action plan. Consider only specific reduction targets set by the city beyond its current obligations, and what sectors/areas/gases do they cover?",
         "questions": [
             {
                 "qid": "reduction_target_percentage",
@@ -94,35 +94,35 @@
         ]
     },
     "sectoral_ambitions": {
-        "context": "Review the SECAP document and find answers the following questions regarding the sectoral targets. Does the SECAP report clearly identifies the sectoral targets? Are the sectors clearly defined? If yes, state the sectors.",
+        "context": "Does the SECAP report clearly identifies the sectoral targets? Are the sectors clearly defined? If yes, describe the sectoral targets. Beware that this target has to be defined only on the particular sector.",
         "questions": [
             {
                 "qid": "sector_target_stationary_energy",
-                "question": "If the SECAP sets a sector-specific target for Stationary energy, what is the target?",
+                "question": "Does the SECAP sets an explicit sector-specific target for `Stationary energy` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
                 "response_format": "string",
                 "additional_context": "These emissions come from final energy consumption in residential, commercial, and municipal/institutional buildings and facilities, as well as from manufacturing, construction industries (below or equal to 20 MW as thermal energy input), and agriculture/forestry/fisheries. GHG emissions from \"energy generation\" industries/facilities should not be reported under this sector to avoid double counting of emissions."
             },
             {
                 "qid": "sector_target_transport",
-                "question": "If the SECAP sets a sector-specific target for Transport, what is the target?",
+                "question": "Does the SECAP sets an explicit sector-specific target for `Transport` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
                 "response_format": "string",
                 "additional_context": "All GHG emissions (direct emission from fuel combustion and indirect emission due to consumption of grid-supplied energy) occurring for transportation purposes within the local authority boundary shall be reported"
             },
             {
                 "qid": "sector_target_waste_wastewater",
-                "question": "If the SECAP sets a sector-specific target for Waste/wastewater, what is the target?",
+                "question": "Does the SECAP sets an explicit sector-specific target for `Waste and Wastewater management` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
                 "response_format": "string",
                 "additional_context": ""
             },
             {
                 "qid": "sector_target_ippu",
-                "question": "If the SECAP sets a sector-specific target for Industrial processes and product use (IPPU), what is the target?",
+                "question": "Does the SECAP sets an explicit sector-specific target for `Industrial processes and product use (IPPU)` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
                 "response_format": "string",
-                "additional_context": ""
+                "additional_context": "IPPU sector comprise of processes beyond energy consumption in industries such as Mineral production, Cement production,  Metals production or processes ustilizing compounds such as HFCs, PFCs, SF6 or NF3. "
             },
             {
                 "qid": "sector_target_afolu",
-                "question": "If the SECAP sets a sector-specific target for Agriculture, Forestry, and Other Land Use (AFOLU), what is the target?",
+                "question": "Does the SECAP sets an explicit sector-specific target for `Agriculture, Forestry, and Other Land Use (AFOLU)` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
                 "response_format": "string",
                 "additional_context": ""
             }
@@ -133,108 +133,43 @@
         "questions": [
             {
                 "qid": "gas_reduction_target_CO2",
-                "question": "If the SECAP sets a specific reduction target for CO2, what is the target?",
+                "question": "Does the SECAP sets an explicit gas-specific target for `CO2` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
                 "response_format": "string",
                 "additional_context": ""
             },
             {
                 "qid": "gas_reduction_target_CH4",
-                "question": "If the SECAP sets a specific reduction target for CH4, what is the target?",
+                "question": "Does the SECAP sets an explicit gas-specific target for `CH4` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
                 "response_format": "string",
                 "additional_context": ""
             },
             {
                 "qid": "gas_reduction_target_N2O",
-                "question": "If the SECAP sets a specific reduction target for N2O, what is the target?",
+                "question": "Does the SECAP sets an explicit gas-specific target for `N2O` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
                 "response_format": "string",
                 "additional_context": ""
             },
             {
                 "qid": "gas_reduction_target_PFCs",
-                "question": "If the SECAP sets a specific reduction target for PFCs, what is the target?",
+                "question": "Does the SECAP sets an explicit gas-specific target for `PFCs` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
                 "response_format": "string",
                 "additional_context": ""
             },
             {
                 "qid": "gas_reduction_target_NF3",
-                "question": "If the SECAP sets a specific reduction target for NF3, what is the target?",
+                "question": "Does the SECAP sets an explicit gas-specific target for `NF3` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
                 "response_format": "string",
                 "additional_context": ""
             },
             {
                 "qid": "gas_reduction_target_HFCs",
-                "question": "If the SECAP sets a specific reduction target for HFCs, what is the target?",
+                "question": "Does the SECAP sets an explicit gas-specific target for `HFCs` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
                 "response_format": "string",
                 "additional_context": ""
             },
             {
                 "qid": "gas_reduction_target_SF6",
-                "question": "If the SECAP sets a specific reduction target for SF6, what is the target?",
-                "response_format": "string",
-                "additional_context": ""
-            }
-        ]
-    },
-    "barriers": {
-        "context": "Review the SECAP document and find answers the following questions regarding the barriers potentially hindering achieving the mitigation target.",
-        "questions": [
-            {
-                "qid": "barrier_leadership",
-                "question": "Are some barries identified in the \"Leadership\" category? If yes, describe them",
-                "response_format": "string",
-                "additional_context": ""
-            },
-            {
-                "qid": "barrier_financial",
-                "question": "Are some barries identified in the \"Financial\" category? If yes, describe them",
-                "response_format": "string",
-                "additional_context": ""
-            },
-            {
-                "qid": "barrier_regulatory",
-                "question": "Are some barries identified in the \"Regulatory\" category? If yes, describe them",
-                "response_format": "string",
-                "additional_context": ""
-            },
-            {
-                "qid": "barrier_operational",
-                "question": "Are some barries identified in the \"Operational\" category? If yes, describe them",
-                "response_format": "string",
-                "additional_context": ""
-            },
-            {
-                "qid": "barrier_organisational",
-                "question": "Are some barries identified in the \"Organizational\" category? If yes, describe them",
-                "response_format": "string",
-                "additional_context": ""
-            },
-            {
-                "qid": "barrier_partnerships",
-                "question": "Are some barries identified in the \"Partnerships\" category? If yes, describe them",
-                "response_format": "string",
-                "additional_context": ""
-            },
-            {
-                "qid": "barrier_social",
-                "question": "Are some barries identified in the \"Social\" category? If yes, describe them",
-                "response_format": "string",
-                "additional_context": ""
-            },
-            {
-                "qid": "barrier_environmental",
-                "question": "Are some barries identified in the \"Environmental\" category? If yes, describe them",
-                "response_format": "string",
-                "additional_context": ""
-            },
-            {
-                "qid": "barrier_safety_security",
-                "question": "Are some barries identified in the \"Safety and security\" category? If yes, describe them",
-                "response_format": "string",
-                "additional_context": ""
-            },
-            {
-                "qid": "barrier_other",
-                "question": "Are some barries identified in the \"Other\" category? If yes, describe them",
+                "question": "Does the SECAP sets an explicit gas-specific target for `SF6` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
                 "response_format": "string",
                 "additional_context": ""
             }
@@ -260,71 +195,6 @@
                 "question": "Does the plan mention energy citizenship? If yes, describe the concept.",
                 "response_format": "string",
                 "additional_context":""
-            }                
-        ]
-    },
-    "citizens_processes": {
-        "context": "The SECAP document contains individual participatory processes. Review the document to answer questions about these processes.",
-        "questions": [
-            {
-                "qid": "citizens_processes_1",
-                "question": "Is there a participatory process described in the SECAP plan? If yes, describe the process.",
-                "response_format": "string",
-                "additional_context": ""
-            },
-            {
-                "qid": "citizens_processes_2",
-                "question": "Has any part of the SECAP plan been developed through this participatory process?",
-                "response_format": "boolean",
-                "additional_context": ""
-            },
-            {
-                "qid": "citizens_processes_3",
-                "question": "Does this participatory process mention citizens' contribution to specific priorities in the plan?",
-                "response_format": "boolean",
-                "additional_context": ""
-            },
-            {
-                "qid": "citizens_processes_4",
-                "question": "Are vulnerable groups considered among the participants in this participatory process?",
-                "response_format": "boolean",
-                "additional_context": ""
-            },
-            {
-                "qid": "citizens_processes_5",
-                "question": "Are important/relevant stakeholders involved in this participatory process?",
-                "response_format": "boolean",
-                "additional_context": ""
-            },
-            {
-                "qid": "citizens_processes_6",
-                "question": "Is the role of each stakeholder clearly explained in this participatory process?",
-                "response_format": "boolean",
-                "additional_context": ""
-            },
-            {
-                "qid": "citizens_processes_7",
-                "question": "Have any specific barriers to /challenges for citizen engagement been analysed and documented in this participatory process?",
-                "response_format": "boolean",
-                "additional_context": ""
-            },
-            {
-                "qid": "citizens_processes_8",
-                "question": "Does this participatory process include solutions/opportunities to remove identified barriers or fill gaps?",
-                "response_format": "boolean",
-                "additional_context": ""
-            },
-            {
-                "qid": "citizens_processes_9",
-                "question": "How does this participatory process support the implementation of the plan and the achievement of the climate target?",
-                "response_format": "string",
-                "additional_context": ""
-            },
-            {
-                "qid": "citizens_processes_10",
-                "question": "Are the contributions expected from citizens clearly defined in this participatory process?",
-                "response_format": "boolean",
-                "additional_context": ""
             }
         ]
     },

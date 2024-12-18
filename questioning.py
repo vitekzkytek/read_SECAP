@@ -14,24 +14,18 @@ def load_qdf(json_path='questions.json'):
         questions = json.load(f)
     return pd.concat([pd.DataFrame(questions[key]['questions']).assign(context=questions[key]['context']) for key in questions])
 
-def ask_qs_using_RAG(qdf, pdf, llm, emb, output_json,logger):
-    logger.debug('Reading the documents..')
-    documents = pdf_to_documents(pdf)
-    logger.debug('Converting to vector store ...')
-    vector_store = documents_to_vector_store(documents, emb)
+def ask_qdfs(qdf, pdf, llm, vector_store, logger):
+    resps = [
+            standard_RAG_question(qrow, vector_store, llm, pdf, logger=logger) 
+            for qrow in tqdm(qdf.to_dict(orient='records'), desc='Questions')
+        ]
 
-    outputs = []
-
-    for qrow in tqdm(qdf.to_dict(orient='records'), desc=pdf):
-        candidates = search_similar(qrow['question'], vector_store)
-        d = ask_RAG_question(qrow, candidates, llm, pdf, logger=logger)
-        append_to_json(output_json, d)
-    return outputs
+    return pd.DataFrame([r for r in resps if r is not None])
     
 
 def pdf_to_documents(pdf, chunk_size=1000, chunk_overlap=200):
     loader = PyPDFLoader(pdf)
-    documents = loader.load()
+    document = loader.load()
 
     # Split documents into chunks
     text_splitter = RecursiveCharacterTextSplitter(
@@ -39,7 +33,7 @@ def pdf_to_documents(pdf, chunk_size=1000, chunk_overlap=200):
         chunk_overlap=chunk_overlap
     )
 
-    return text_splitter.split_documents(documents)
+    return document, text_splitter.split_documents(document)
 
 def documents_to_vector_store(documents, emb):
     return FAISS.from_documents(documents, emb)
@@ -47,58 +41,77 @@ def documents_to_vector_store(documents, emb):
 def search_similar(q, vector_store, k=10):
     return vector_store.similarity_search(q,k=10)
 
-def ask_RAG_question(qrow, candidates, llm, pdf,logger):
-    try:  
-        logger.debug(f'Asking {qrow["qid"]}')
-        template = PromptTemplate.from_template(PROMPTS['question_prompt'])
-        message = template.invoke({
-            "qid": qrow['qid'],
-            "question": qrow['question'],
-            "candidates": candidates,
-            "response_format": qrow['response_format'],
-            "additional_context": qrow['additional_context']
-        })
-        logger.debug(f'Template and message generated. Invoking LLM')
-        response = llm.invoke(message)
-        logger.debug(f'Response received; Formatting to JSON')
-        d = json.loads(response.content)
-        d['pdf'] = pdf
-        return d
-
-    except JSONDecodeError:
-        logger.error(f'Incorrectly formatted response. PDF: {pdf} - QID: {qrow['qid']}. Response: {response.content}')
+def ask_RAG(embed_query, vector_store, llm, logger, template_key, pdf, template_kwargs={}):
+    logger.debug(f'Asking {embed_query}')
+    try:
+        candidates = search_similar(embed_query, vector_store)
     except Exception as e:
-        logger.error(f'Unhandled error: {str(e)}')
-
-
-
-
-def append_to_json(json_file, obj):
-    if os.path.exists(json_file):
-        # File exists, so append to existing data
-        with open(json_file, 'r+') as file:
-            try:
-                # Read existing data
-                data = json.load(file)
-                
-                # If data is not a list, convert it to a list
-                if not isinstance(data, list):
-                    data = [data]
-                
-                # Append new object
-                data.append(obj)
-                
-                # Move file pointer to the beginning and overwrite
-                file.seek(0)
-                json.dump(data, file, indent=2)
-                file.truncate()
-            
-            except json.JSONDecodeError:
-                # File exists but is empty or invalid
-                json.dump([obj], file, indent=2)
+        raise(Exception(f'Cannot retrieve candidates from vector store. Reason: {str(e)}'))
     
+    if template_key not in PROMPTS:
+        raise(Exception('template_key {template_key} does not exist.'))
     else:
-        # File doesn't exist, create new file with object
-        with open(json_file, 'w') as file:
-            json.dump([obj], file, indent=2)
+        template = PromptTemplate.from_template(PROMPTS[template_key])
+
+    try:
+        message = template.invoke({**{'candidates':candidates}, **template_kwargs})
+    except KeyError as ke:
+        raise
     
+    response = llm.invoke(message)
+    return response_to_dict(response, pdf, logger)
+
+def response_to_dict(response, pdf, logger):
+    try:
+        d = json.loads(response.content)
+        if type(d) == type({}):
+            d['pdf'] = pdf
+        else:
+            for el in d:
+                el['pdf'] = pdf
+        return d
+    except JSONDecodeError:
+        logger.error(f'Incorrectly formatted response. PDF: {pdf}. Response: {response.content}')
+
+
+def standard_RAG_question(qrow, vector_store, llm, pdf, logger):
+    return ask_RAG(
+        embed_query = f"Context: {qrow['question']}. Question: {qrow['question']}",
+        vector_store = vector_store,
+        llm = llm,
+        logger = logger,
+        template_key = 'question_prompt',
+        pdf = pdf,
+        template_kwargs = qrow
+    )
+
+def query_action_detail(action, template_key, llm, vector_store, logger, pdf):
+    return ask_RAG(
+        embed_query = action,
+        vector_store = vector_store,
+        llm = llm,
+        logger = logger,
+        template_key = template_key,
+        pdf = pdf,
+        template_kwargs = {'action':action}
+    )
+
+def ask_long_context(documents, llm, template_key):
+    template = PromptTemplate.from_template(PROMPTS[template_key])
+
+    message = template.invoke({
+        "documents":documents
+    })
+    response = llm.invoke(message)
+
+    return response ## Generalize? to also allow direct JSONs?
+
+def query_action_list(llm, documents, page_start, page_end, logger):
+    logger.debug('Retrieving list of actions')
+    response = ask_long_context(
+        llm=llm,
+        documents = [doc for doc in documents if doc.metadata['page'] >=page_start and doc.metadata['page'] <= page_end],
+        template_key='action_list_prompt'
+    )
+
+    return  response.content.split('\n')

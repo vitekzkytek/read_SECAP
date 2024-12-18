@@ -47,7 +47,7 @@ class EmbeddingsModel(Embeddings):
 def load_models(service='GPT@JRC'):
     if service == 'GPT@JRC':
         llm = ChatOpenAI(
-            model="Llama-3.1-70B-Instruct",
+            model="llama-3.3-70b-instruct",
             api_key=os.getenv('GPTJRC_API_TOKEN'),
             base_url=os.getenv('GPTJRC_BASE_URL'),
         )
