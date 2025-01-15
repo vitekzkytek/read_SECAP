@@ -8,26 +8,7 @@ PROMPTS = {
     Question: {question}
     Additional context: {additional_context}
     Response format: {response_format}
-
-    Output structure: 
-    ```json
-    {{
-        "qid":"QUESTION_ID",
-        "question":"EXACT_QUESTION_PHRASING",
-        "response":"RESPONSE_IN_APPROPRIATE_FORMAT",
-        "explanation":"EXPLANATION_FOR_THE_GIVEN_QUESTION",
-        "page_reference":"PAGE_NUMBER(S)_FROM_THE_DOCUMENT",
-        "relevant_quotes":["EXACT_QUOTE_SUPPORTING_THE_ANSWER"]
-    }}
-    ```
-    Do not use any other fields. Field names should always match the names above.
-
-    Returned string always contain only the json. Do not use markdown code blocks. Returned string will always start with "{{" and end with "}}".
-
-    Other common formatting issues to mind when formatting:
-    - do not include trailing comma
-    - multiple strings should always be surrounded list brackets "[" and "]"
-  ''',
+    ''',
 
   "action_list_prompt":'''
     Full SECAP plan:
@@ -43,6 +24,7 @@ PROMPTS = {
     Remember: Your task is to capture EVERY SINGLE action or measure mentioned in the SECAP plan. Do not summarize or combine actions. Each distinct action, no matter how small, should be listed separately. Accuracy and completeness are paramount.
     Returned string always contain only the action titles. Do not use markdown code blocks.
   ''',
+
   "action_details": '''
 I will provide you with an action title from the SECAP plan and you will some details:
 
@@ -161,49 +143,6 @@ If not sure about the year, leave the field empty.
 
 In `impact_*` columns always include the reported unit. 
 Do not attempt to convert the units.
-
-{{
-  "action":"<action-title>",
-  "page_reference": "<PAGE_REFERENCE>",
-  "title_english": "<ENGLISH_TRANSLATION_OF_TITLE>",
-  "action_sectors": ["SECTOR1-LISTED-ABOVE","SECTOR2-LISTED-ABOVE"],
-  "action_areas": ["AREA1-LISTED-ABOVE","AREA2-LISTED-ABOVE"],
-  "action_policy_instruments": ["INSTRUMENT1-LISTED-ABOVE","INSTRUMENT2-LISTED-ABOVE"],
-  "stakeholders": [
-		  {{
-		    "type": "&lt;STAKEHOLDER-TYPE-LISTED-ABOVE&gt;",
-		    "should_be_involved": true/false,
-		    "actually_involved": true/false,
-		    "justification": "Brief explanation of why this stakeholder should or should not be involved, and whether they are actually involved"
-		  }},
-		  ...
-		],
-  "financing_sources": ["FINANCE-SOURCE-LISTED-ABOVE","FINANCE-SOURCE-LISTED-ABOVE"],
-  "key_action": &lt;BOOL_INDICATING_LISTING_AS_KEY_ACTION&gt;,
-  "implementation_status":"&lt;IMPLEMENTATION_STATUS_ABOVE&gt;",
-  "detailed_description_english": "&lt;DETAILED DESCRIPTION IN ENGLISH&gt;",
-  "responsible_department_organization": "&lt;DEPARTMENT OR ORGANIZATION RESPONSIBLE FOR IMPLEMENTATION&gt;",
-  "impact_yearly_ghg_reduction": "&lt;ESTIMATION-OF-GREENHOUSE-GASES-IN-REPORTED-UNITS-OF-CO2-EQUIVALENTS-PER-YEAR &gt;",
-  "impact_yearly_energy_savings":"&lt;ESTIMATED-YEARLY-ENERGY-SAVINGS-REPORTED UNITS-per year&gt;"
-  "impact_renewable_energy_production": "&lt;ESTIMATED-PRODUCTION-REPORTED UNITS-per-year&gt;",
-  "cost_estimation": {{
-    "investment_costs": "&lt;TOTAL-INVESTMENTS-COSTS&gt;",
-    "running_costs": "&lt;YEARLY-RUNNING-COSTS&gt;",
-    "other_costs":""
-  }},
-  "timeframe_start": "&lt;START-DATE-IN-FORMAT MM/YYYY&gt;",
-  "timeframe_end": "&lt;END-DATE-IN-FORMAT MM/YYYY&gt;",
-  "implementation_status": "IMPLEMENTATION-STATUS-VALUE-LISTED-ABOVE",
-  "social_aspects_discussed":true/false,
-  "social_aspects_details":"details on social aspects considerations for the action"
-}}
-
-Returned string always contain only the json. Do not use markdown code blocks. Returned string will always start with "{{" and end with "}}"
-
-Other common formatting issues to mind when formatting:
-    - do not include trailing comma
-    - multiple strings should always be surrounded list brackets "[" and "]"
-
 ''',
 
   "action_SMART": '''
@@ -238,86 +177,46 @@ Evaluation Guidelines:
     Determine the action's relevance to the overall goal and objective of the plan
     Assess the action's time-bound nature, including specific deadlines or timeframes
 
-Output Format:
-
-Please return the results in the following JSON format:
-
-{{
-    "action":[action],
-    "S": {{
-      "score": [Score],
-      "explanation": "[Explanation]"
-    }},
-    "M": {{
-      "score": [Score],
-      "explanation": "[Explanation]"
-    }},
-    "A": {{
-      "score": [Score],
-      "explanation": "[Explanation]"
-    }},
-    "R": {{
-      "score": [Score],
-      "explanation": "[Explanation]"
-    }},
-    "T": {{
-      "score": [Score],
-      "explanation": "[Explanation]"
-    }}
-}}
-
-Returned string always contain only the json. Do not use markdown code blocks. Returned string will always start with "{{" and end with "}}".
-
-Other common formatting issues to mind when formatting:
-    - do not include trailing comma
-    - multiple strings should always be surrounded list brackets "[" and "]"
 ''',
 "barriers_prompt":'''
     Relevant pieces of the documents:
     {candidates}
 
     Task: List all barriers to accelerating emission reduction in view of the 2030 climate-neutrality goal that are explicitly described in the plan.
-    For each barrier include:
-      - `title`
-      - `brief_description`
-      - `page_reference`
-      - `explanation`
-      -  list with `category` (potentially multiple). Choose from the following categories: `Leadership`, `Financial`, `Regulatory`, `Operational`, `Organisational`, `Partnerships`, `Social`, `Environmental`, `Safety and Security`,  `Other`. 
-        
-    Response format: simple JSON using the fields above.
-
-    Do not use any other fields. Field names should always match the names above.
-
-    Returned string always contain only the json. Do not use markdown code blocks. Returned string will always start with "[" and end with "]"
-
-    Other common formatting issues to mind when formatting:
-    - do not include trailing comma
-    - multiple strings should always be surrounded list brackets "[" and "]"
-
   ''',
   "participatory_processes":'''
     Relevant pieces of the documents:
     {candidates}
 
     Task: List all participatory processes described in the SECAP plan 
-    For each barrier include:
-      - `title`
-      - `brief_description` - in English
-      - `page_reference`
-      - `explanation`
-      - `relevant_stakeholders`: [{{"stakeholder":"<stakeholder-type>","role":"<ENGLISH-DESCRIPTION_OF_THEIR_ROLE>"}}, ...]
-      - `implementation_barriers`:
-      - `barriers_solution`
-      - `citizen_contribution_clearly_defined`
-        
-    Response format: JSON using the fields above.
+  ''',
+  "pydantic_instructions":'''
+    {original_prompt}
+  You must respond with a valid JSON object that matches this schema:
+  {json_schema}
 
-    Do not use any other fields. Field names should always match the names above.
+  {formatting_requirements}
+  ''',
+  "pydantic_clarification":'''
+  Previous response was invalid.
+  Original prompt: {original_prompt}
+  Previous response: {content}
+  Error: {error}
+  Please provide response as JSON matching:
+  {json_schema}
 
-    Returned string always contain only the json. Do not use markdown code blocks. Returned string will always start with "[" and end with "]"
+  Formatting requirements:
+  {formatting_requirements}
 
-    Other common formatting issues to mind when formatting:
-    - do not include trailing comma
-    - multiple strings should always be surrounded list brackets "[" and "]"
+  ''',
+  "formatting_requirements":'''
+  Formatting requirements:
+  - Each action must be a complete object with all required fields. Do not return just identifiers or partial information.
+  - Response must contain ONLY raw JSON
+  - No markdown, no explanations
+  - No trailing comma after last element
+  - Use double quotes for strings
+  - Escape only necessary special characters - mainly double quote (\") amd backslash (\\) with a single backslash ("\"). Do not use double backslashes ("\\"). Never escape single quotes ('), backtick (`) or tick (´).
+  - Ensure all brackets and braces are correctly opened and closed
   '''
 }

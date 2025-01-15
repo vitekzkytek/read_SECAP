@@ -61,7 +61,7 @@ def load_models(service='GPT@JRC'):
         llm = ChatOpenAI(
             model="meta-llama/Llama-3.3-70B-Instruct",
             api_key=os.getenv('DEEPINFRA_API_TOKEN'),
-            base_url=os.getenv('DEEPINFRA_BASE_URL'),
+            base_url=os.getenv('DEEPINFRA_BASE_URL'),max_tokens=10000
         )
 
         emb = DeepInfraEmbeddings(
