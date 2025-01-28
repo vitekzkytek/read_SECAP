@@ -179,16 +179,45 @@ Evaluation Guidelines:
 
 ''',
 "barriers_prompt":'''
-    Relevant pieces of the documents:
-    {candidates}
 
-    Task: List all barriers to accelerating emission reduction in view of the 2030 climate-neutrality goal that are explicitly described in the plan.
-  ''',
+    Context: Below are relevant excerpts from a Sustainable Energy and Climate Action Plan (SECAP).
+    {candidates}
+    
+    Task: Analyze these excerpts and identify only explicitly stated barriers that affect the overall implementation 
+    of the SECAP or achievement of emission reduction targets. 
+    
+    A barrier should be something that:
+    1. Impedes the implementation of multiple actions or the plan as a whole
+    2. Is clearly described using terms like "barrier", "challenge", "weakness", "lack of", etc.
+    3. Is presented as a current or anticipated obstacle, not a hypothetical one
+    
+    If no clear barriers meeting these criteria are found, do not return any.
+    ''',
   "participatory_processes":'''
-    Relevant pieces of the documents:
-    {candidates}
+  Context: Below are relevant excerpts from a Sustainable Energy and Climate Action Plan (SECAP).
+  {candidates}
 
-    Task: List all participatory processes described in the SECAP plan 
+  Task: Analyze these excerpts for public participation elements. Structure your analysis into these categories:
+
+  1. Formal Participation Processes
+  - Include only concrete, implemented processes (not planned/proposed)
+  - Quote relevant text as evidence
+
+  2. Citizen Input Mechanisms
+  - List specific tools/methods used to gather citizen input
+  - Quote relevant text as evidence
+
+  3. Stakeholder Groups
+  - List only formally established groups
+  - Quote relevant text as evidence
+
+  4. Participation Barriers & Solutions
+  - List only explicitly stated barriers/challenges
+  - Include corresponding solutions if mentioned
+  - Quote relevant text as evidence
+
+  Do not infer or extrapolate beyond what is explicitly stated in the text. 
+  Only include information that is directly supported by the excerpts.
   ''',
   "pydantic_instructions":'''
     {original_prompt}

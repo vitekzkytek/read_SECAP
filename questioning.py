@@ -58,10 +58,10 @@ def documents_to_vector_store(documents, emb):
 def search_similar(q, vector_store, k=10):
     return vector_store.similarity_search(q,k=10)
 
-def ask_RAG(embed_query, vector_store, response_model, llm, logger, template_key, city, template_kwargs={}):
+def ask_RAG(embed_query, vector_store, response_model, llm, logger, template_key, city, template_kwargs={},k=10):
     logger.debug(f'Asking {embed_query}')
     try:
-        candidates = search_similar(embed_query, vector_store)
+        candidates = search_similar(embed_query, vector_store, k=k)
     except Exception as e:
         raise(Exception(f'Cannot retrieve candidates from vector store. Reason: {str(e)}'))
     
@@ -85,7 +85,7 @@ def standard_RAG_question(qrow, vector_store, llm, city, logger):
         qid: str = Field(..., description="Unique identifier for the question")
         question: str = Field(..., description="Exact wording of the question")
         response: str = Field(..., description="Response to the question in the appropriate format")
-        explanation: str = Field(..., description="Explanation for the given question")
+        explanation: str = Field(..., description="Explanation for the given response")
         page_reference: str = Field(..., description="Page number(s) from the document where the question is relevant")
         relevant_quotes: List[str] = Field([], description="Exact quotes supporting the answer")
 
@@ -136,9 +136,9 @@ def query_action_detail(action, llm, vector_store, logger, city):
         implementation_status: str = Field(..., description="Implementation status")
         detailed_description_english: str = Field(..., description="Detailed description in English")
         responsible_department_organization: str = Field(..., description="Department or organization responsible for implementation")
-        impact_yearly_ghg_reduction: float = Field(..., description="Yearly GHG reduction")
-        impact_yearly_energy_savings: float = Field(..., description="Yearly energy savings")
-        impact_renewable_energy_production: float = Field(..., description="Yearly renewable energy production")
+        impact_yearly_ghg_reduction: str = Field(..., description="Yearly GHG reduction")
+        impact_yearly_energy_savings: str = Field(..., description="Yearly energy savings")
+        impact_renewable_energy_production: str = Field(..., description="Yearly renewable energy production")
         cost_estimation: CostEstimation = Field(..., description="Cost estimation")
         timeframe_start: datetime = Field(..., description="Start date in format YYYY-MM-DD")
         timeframe_end: datetime = Field(..., description="End date in format YYYY-MM-DD")
@@ -195,7 +195,7 @@ def ask_long_context(documents, response_model, llm, template_key, logger):
     message = template.invoke({
         "documents":documents
     })
-    response = invoke_pydantic(message, response_model, logger, llm)
+    response = invoke_pydantic(message, response_model, logger, llm, original_prompt_in_clarification=False)
     return response
 
 
@@ -251,7 +251,7 @@ def filter_action_pages(documents, city_config):
 class LLMValidationError(Exception):
     pass
 
-def invoke_pydantic(prompt, response_model, logger, llm, max_retries=5, retry_delay=1):
+def invoke_pydantic(prompt, response_model, logger, llm, max_retries=5, retry_delay=1, original_prompt_in_clarification=True):
     response_succesful = False
     json_schema=response_model.model_json_schema()
     full_prompt = PROMPTS['pydantic_instructions'].format(
@@ -300,7 +300,7 @@ def invoke_pydantic(prompt, response_model, logger, llm, max_retries=5, retry_de
                 raise LLMValidationError(msg)
             if response_succesful:
                 clarification_prompt = PROMPTS['pydantic_clarification'].format(
-                    original_prompt=full_prompt,
+                    original_prompt=full_prompt if original_prompt_in_clarification else 'Sorry, original prompt is too long to display',
                     content=content,
                     error=str(e),
                     json_schema=json_schema,

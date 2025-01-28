@@ -98,19 +98,19 @@
         "questions": [
             {
                 "qid": "sector_target_stationary_energy",
-                "question": "Does the SECAP sets an explicit sector-specific target for `Stationary energy` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
+                "question": "Cities are obliged to setup a general mitigation target, but they can also set up additional sector-specific targets. Does the SECAP sets up an explicit additional sector-specific target for `Stationary energy` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
                 "response_format": "string",
                 "additional_context": "These emissions come from final energy consumption in residential, commercial, and municipal/institutional buildings and facilities, as well as from manufacturing, construction industries (below or equal to 20 MW as thermal energy input), and agriculture/forestry/fisheries. GHG emissions from \"energy generation\" industries/facilities should not be reported under this sector to avoid double counting of emissions."
             },
             {
                 "qid": "sector_target_transport",
-                "question": "Does the SECAP sets an explicit sector-specific target for `Transport` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
+                "question": "Cities are obliged to setup a general mitigation target, but they can also set up additional sector-specific targets. Does the SECAP sets up an explicit additional sector-specific target for `Transport` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
                 "response_format": "string",
                 "additional_context": "All GHG emissions (direct emission from fuel combustion and indirect emission due to consumption of grid-supplied energy) occurring for transportation purposes within the local authority boundary shall be reported"
             },
             {
                 "qid": "sector_target_waste_wastewater",
-                "question": "Does the SECAP sets an explicit sector-specific target for `Waste and Wastewater management` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
+                "question": "Cities are obliged to setup a general mitigation target, but they can also set up additional sector-specific targets. Does the SECAP sets up an explicit additional sector-specific target for `Waste and Wastewater management` that can be expressed as a percentage deduction, emission volume or saved energy consumption?",
                 "response_format": "string",
                 "additional_context": ""
             },
@@ -215,13 +215,13 @@
             },
             {
                 "qid": "social_impact_evaluation",
-                "question": "Does the plan include any assessment, monitoring and/or evaluation of the possible social impacts of the transition?",
+                "question": "Cities are expected to monitor the social impact of the action plan implementation. This obviously includes evaluation of possible social impacts such as energy poverty, but also others. Does the plan include any assessment, monitoring and/or evaluation of the possible social impacts of the transition?",
                 "response_format": "boolean",
                 "additional_context": ""
             },
             {
                 "qid": "monitoring_mechanisms",
-                "question": "Are there any monitoring mechanisms to in place or ex-post evaluation systems to assess the social impacts of the transition?",
+                "question": "Cities are expected to monitor the social impact of the action plan implementation. Describe all data monitoring mechanisms of social impacts that SECAP plan describes that it will implemented or states it was already implemented. If no monitoring is mentioned, say it.",
                 "response_format": "boolean",
                 "additional_context": ""
             },
@@ -274,19 +274,19 @@
             },
             {
                 "qid": "governance_change_costs",
-                "question": "Does the plan assess costs and access to resources for a governance change in terms of additional staff and introduction of new skills for the local administration?",
+                "question": "Does the plan assess costs and access to resources for a governance change in terms of additional staff and introduction of new skills for the local administration? Only consider the link between governance and cost,not cost in general and also not governance in general.",
                 "response_format": "boolean",
                 "additional_context": ""
             },
             {
                 "qid": "policy_involvement",
-                "question": "Does the plan assess the possibility of low policymakers engagement, lack of long-term commitment or weak cooperation with the regional and national level and actions on how to address it?",
+                "question": "Does the plan assess the possibility of low engagement of political representatives on all levels - municipal, regional, national or even international. Does plan describes how low commitment would impede the target achievement and how to address it? Do not consider low engagement of other stakeholders such as municipal staff, citizens etc. ",
                 "response_format": "boolean",
                 "additional_context": ""
             },
             {
                 "qid": "stakeholder_participation",
-                "question": "Does the plan assess the potential lack of stakeholders/citizens participation in the governance system and how to make sure that they are included and their interests are taken into consideration in the future?",
+                "question": "Does the plan assess the possibility of low engagement of citizens and other third-party stakeholders such as companies, NGOs, researchers, etc.. Does plan describes how low commitment would impede the target achievement and how to address it? Do not consider low engagement of internal stakeholders such as municipal staff, political representatives etc.",
                 "response_format": "boolean",
                 "additional_context": ""
             },
@@ -316,7 +316,7 @@
             },
             {
                 "qid": "coordination_mechanisms",
-                "question": "Does the governance system foreseen to achieve climate change impact mitigation include processes and mechanisms to ensure coordination within the local authority departments, or among the local authority and other public agencies?",
+                "question": "Often times close cooperation with other policy bodies is neccesary for success. Does the SECAP plan include processes and mechanisms to ensure coordination of the municipality departments within with other public agencies? How formalized these cooperation mechanisms are? If no coordination mechanisms are put in place, just say it. ",
                 "response_format": "boolean",
                 "additional_context": ""
             },
@@ -328,7 +328,7 @@
             },
             {
                 "qid": "intergovernmental_coordination",
-                "question": "Does the governance system foreseen to achieve climate change impact mitigation include processes and mechanisms to ensure coordination among the local authority and higher levels of government?",
+                "question": "Often times close cooperation with other higher levels of government is necessary. Does the SECAP plan include processes and mechanisms to ensure coordination of the municipality departments within with higher levels of govenrment? How formalized these cooperation mechanisms are? If no coordination mechanisms are put in place, just say it. ",
                 "response_format": "boolean",
                 "additional_context": ""
             },
@@ -345,7 +345,7 @@
         "questions": [
             {
                 "qid": "policy_links_and_synergies",
-                "question": "Does the plan describe links and synergies with existing overarching policies, strategies and agendas?",
+                "question": "Does the plan describe links and synergies with existing overarching national and international political context?",
                 "response_format": "boolean",
                 "additional_context": ""
             },
@@ -357,7 +357,7 @@
             },
             {
                 "qid": "stakeholder_environment_evaluation",
-                "question": "Has the comprehensiveness and inclusiveness of the stakeholder environment been evaluated?",
+                "question": "List all stakeholders involved in the development and implementation of the plan. Then think again and consider what stakeholders should be involved in the development and implementation of the plan and finally compare these lists and identify stakeholders that should be involeved, but are not.",
                 "response_format": "boolean",
                 "additional_context": ""
             },
