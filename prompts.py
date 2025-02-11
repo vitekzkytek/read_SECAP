@@ -15,14 +15,22 @@ PROMPTS = {
 
     {documents}
 
-    Thoroughly review the entire SECAP plan above and meticulously collect ALL mitigation actions and measures described within it. It is crucial that you do not overlook or omit any action, no matter how small or seemingly insignificant. Be comprehensive and exhaustive in your collection.
+    Thoroughly review the entire SECAP plan above and meticulously collect ALL mitigation actions and measures described within it.
 
+    Extract all formally defined mitigation actions and measures that meet at least one of these criteria:
+    - Listed under dedicated "Actions" or "Measures" sections
+    - Often they have a distinct identifier or reference number
+    - Contains specific targets, timelines, or resource allocations
+    - Formally labeled as an action/measure/initiative
+     
     Be vigilant and thorough. Double-check your work to ensure you haven't missed any actions. Remember, completeness is key.
 
-    Return the response in the a simple list of action titles (including its identifier or numbering if available), where each action is on separate line. 
+    For each action return only basic set of information:
+    - Action title both in original language of the plan and in English
+    - Basic description of the action
+    - page reference
 
     Remember: Your task is to capture EVERY SINGLE action or measure mentioned in the SECAP plan. Do not summarize or combine actions. Each distinct action, no matter how small, should be listed separately. Accuracy and completeness are paramount.
-    Returned string always contain only the action titles. Do not use markdown code blocks.
   ''',
 
   "action_details": '''
@@ -41,7 +49,6 @@ and implementation in English (translate from the description in the document).
 
 ## Candidate documents containing a description:
 {candidates}
-
 
 ## List of categories
 

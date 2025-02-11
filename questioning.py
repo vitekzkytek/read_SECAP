@@ -14,6 +14,7 @@ from datetime import datetime
 from pydantic import BaseModel, Field
 from typing import List, Optional
 from openai import InternalServerError
+from typing import Literal
 
 def load_qdf(json_path='questions.json'):
     with open(json_path,'r') as f:
@@ -90,7 +91,7 @@ def standard_RAG_question(qrow, vector_store, llm, city, logger):
         relevant_quotes: List[str] = Field([], description="Exact quotes supporting the answer")
 
     return ask_RAG(
-        embed_query = f"Context: {qrow['question']}. Question: {qrow['question']}",
+        embed_query = f"Context: {qrow['context']}. Question: {qrow['question']}",
         vector_store = vector_store,
         response_model = StandardQuestion,
         llm = llm,
@@ -102,49 +103,70 @@ def standard_RAG_question(qrow, vector_store, llm, city, logger):
 
 def query_action_detail(action, llm, vector_store, logger, city):
 
+    SectorType = Literal["municipal buildings", "residential buildings", "tertiary (non municipal) buildings, equipment/factilities", "transport",
+        "industry", "local heat/cold production", "waste", "local electricity production"]
+
+    PolicyAreaType = Literal[
+        "Agriculture and forestry related", "Electric vehicles", "Urban regeneration","Cleaner efficient vehicles", "Modal shift to walking and cycling",
+        "Hydroelectric power", "Integrated action", "Building envelope", "Car sharing pooling", "Information and communication technologies", "Tree planting in urban areas",
+        "Behavioural changes", "Industry other", "Renewable energy for space heating and hot water", "Energy efficient lighting systems", "Energy efficiency in industrial processes",
+        "Photovoltaics", "Energy efficient electrical appliances", "District heating cooling network", "Energy efficiency in space heating and hot water", "Combined heat and power",
+        "Modal shift to public transport", "Waste and wastewater management", "Eco driving", "Improvement of logistics and urban freight transport", "Wind power", "Biomass power plant",
+        "District heating cooling plant", "Energy efficiency in buildings", "Industry renewable energy", "Road network optimisation", "Mixed use development and sprawl containment", 
+        "Smart grids","Waste & wastewater management"
+    ]
+
+    PolicyInstrumentType = Literal[
+        "Land use planning", "Mobility planning regulation", "Energy management", "Awareness raising training", "Building standards", "Voluntary agreements with stakeholders",
+        "Grants and subsidies", "Public procurement", "Energy certification labelling", "Third party financing", "Not applicable", "Road pricing", "Energy suppliers obligations",
+        "Integrated ticketing and charging", "Energy carbon taxes", "Energy performance standards"
+    ]
+
+    StakeholderType = Literal[
+        "Citizens", "National government and/or agency(ies)", "Sub-national government(s) and/or agency(ies)", "Business and private sector",
+        "NGOs & civil society", "Academia", "Education sector", "Trade unions"
+    ]
+
+    FinancingSourceType = Literal[
+        "Local authority's own resources", "EU funds and programmes", "National funds and programmes", "Regional funds and programmes", "Public-private partnerships", "Private partnerships", "Other"
+    ]
+
+    ImplementationStatusType = Literal[
+        "Not started", "Completed", "Cancelled", "Ongoing", "Postponed"
+    ]
 
     class Stakeholder(BaseModel):
-        """
-        Model representing a stakeholder.
-        """
-        type: str = Field(..., description="Type of stakeholder")
-        should_be_involved: bool = Field(..., description="Whether the stakeholder should be involved")
-        actually_involved: bool = Field(..., description="Whether the stakeholder is actually involved")
-        justification: str = Field(..., description="Brief explanation of why the stakeholder should or should not be involved, and whether they are actually involved")
+        type: StakeholderType
+        should_be_involved: bool
+        actually_involved: bool
+        justification: str
 
     class CostEstimation(BaseModel):
-        """
-        Model representing cost estimation.
-        """
-        investment_costs: float = Field(..., description="Total investment costs")
-        running_costs: float = Field(..., description="Yearly running costs")
-        other_costs: Optional[str] = Field(None, description="Other costs")
+        investment_costs: str
+        running_costs: str
+        other_costs: Optional[str]
 
     class ActionModel(BaseModel):
-        """
-        Model representing an action.
-        """
-        action: str = Field(..., description="Action title")
-        page_reference: str = Field(..., description="Page reference")
-        title_english: str = Field(..., description="English translation of title")
-        action_sectors: List[str] = Field(..., description="Action sectors")
-        action_areas: List[str] = Field(..., description="Action areas")
-        action_policy_instruments: List[str] = Field(..., description="Action policy instruments")
-        stakeholders: List[Stakeholder] = Field(..., description="Stakeholders")
-        financing_sources: List[str] = Field(..., description="Financing sources")
-        key_action: bool = Field(..., description="Whether the action is a key action")
-        implementation_status: str = Field(..., description="Implementation status")
-        detailed_description_english: str = Field(..., description="Detailed description in English")
-        responsible_department_organization: str = Field(..., description="Department or organization responsible for implementation")
-        impact_yearly_ghg_reduction: str = Field(..., description="Yearly GHG reduction")
-        impact_yearly_energy_savings: str = Field(..., description="Yearly energy savings")
-        impact_renewable_energy_production: str = Field(..., description="Yearly renewable energy production")
-        cost_estimation: CostEstimation = Field(..., description="Cost estimation")
-        timeframe_start: datetime = Field(..., description="Start date in format YYYY-MM-DD")
-        timeframe_end: datetime = Field(..., description="End date in format YYYY-MM-DD")
-        social_aspects_discussed: bool = Field(..., description="Whether social aspects are discussed")
-        social_aspects_details: Optional[str] = Field(None, description="Details on social aspects considerations for the action")
-
+        action: str
+        page_reference: str
+        title_english: str
+        action_sectors: List[SectorType]
+        action_areas: List[PolicyAreaType]
+        action_policy_instruments: List[PolicyInstrumentType]
+        stakeholders: List[Stakeholder]
+        financing_sources: List[FinancingSourceType]
+        key_action: bool
+        implementation_status: ImplementationStatusType
+        detailed_description_english: str
+        responsible_department_organization: str
+        impact_yearly_ghg_reduction: str
+        impact_yearly_energy_savings: str
+        impact_renewable_energy_production: str
+        cost_estimation: CostEstimation
+        timeframe_start: datetime
+        timeframe_end: datetime
+        social_aspects_discussed: bool
+        social_aspects_details: Optional[str]
 
     return ask_RAG(
         embed_query = action,
@@ -164,7 +186,7 @@ def query_action_SMART(action, llm, vector_store, logger, city):
         """
         Model representing a score.
         """
-        score: float = Field(..., description="List of scores")
+        score: float = Field(..., description="List of scores. 1 means highest, 0 lowest", ge=0, le=1)
         explanation: str = Field(..., description="List of explanations")
 
     class SmartModel(BaseModel):
